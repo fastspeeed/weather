@@ -5,18 +5,26 @@
 ### ubuntu docker 版本安装
 * 安装ubuntu server 16.4 lts
 
-https://www.ubuntu.com/download/server
+   https://www.ubuntu.com/download/server
 
 * 连接到网络
 
 假设服务器不能通过缺省网络设置上网，需要修改路由和dns
+
 修改路由　sudo route add default gw 192.168.x.x 这个网址是能网关
+
 修改dns vi /etc/resolv.conf 
+
 修改　nameserver 192.168.2.2　到正确的dns
+
 其中vi的操作为
+
 按i为编辑状态
+
 按esc为命令状态
+
 在命令状态下键入:w为写文件 ：q为退出
+
 
 * 安装docker 
 
