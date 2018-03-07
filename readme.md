@@ -1,34 +1,89 @@
 # 航空气象报文解析
 
-从报文数据中取到原始数据，解析为json格式数据，转换到xml,上传xml到ftp
+  从报文数据中取到原始数据，解析为json格式数据，转换到xml,上传xml到ftp
 
-### windows 版本安装
+### 安装
 
 * 安装 node js
- https://nodejs.org/en/
 
-* 安装 node-oracledb
+  下载地址　https://nodejs.org/en/
 
-https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
+* 安装 node-oracledb 的依赖库
 
-安装instant-client
+    参考手册　https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
 
-http://www.oracle.com/technetwork/database/database-technologies/instant-client/overview/index.html
+  安装　oracle instant-client
 
-加解压缩路径到windows环境变量path中
+    下载地址　http://www.oracle.com/technetwork/database/database-technologies/instant-client/overview/index.html
+  
+  解压缩到任意路径
 
-*　安装metar软件包
+  增加环境变量
+    
+    如果是windows系统，加解压缩路径到windows环境变量path中
 
-复制目录到硬盘目录 
-安装依赖包　
-在msdos下进入meatr目录　输入npm install
-测试　npm start如果没有
-增加
+*　安装　metar 
+
+   ```
+   git clone https://github.com/fastspeeed/weather/
+   cd weather
+   npm install
+   ```
+
+*　单独运行 metar
+
+   运行一次可以转换当前时间点以前的数据
+   ```
+   cd weather
+   npm start
+   ```
+   
+*　持续运行metar
+
+   在windows系统中配置任务管理　
+
+   执行命令为npm start
+
+   执行目录为 xxx:/weather
 
 
-*
+### 配置文件
 
-### ubuntu docker 版本安装
+* 数据库和ftp参数设置
+
+　复制app.json.template 到app.json
+
+```
+{
+  "db": {
+    "user"          : "mhapp",//数据库用户名
+    "password"      : "mhapp",//数据库密码
+    "connectString" : "192.6.203.102/ZYLDWDB"//数据库地址和服务名
+  },
+  "query": "SELECT RPTCONTENT FROM rpt01_cac WHERE tt = 'SA' and INSERTTIME >to_date(:now,'yyyy-MM-dd  HH24:mi:ss')",//查询报文语句，一般不需更改
+  "maxDate":"SELECT max(INSERTTIME) FROM rpt01_cac WHERE tt = 'SA'",//查询最后报文日期语句，一般不需更改
+  "ftp":{
+    "host":"172.20.102.5",//ftp地址
+    "port":21,//端口
+    "user":"telexftp",//用户名
+    "password":"telex"//密码
+  },
+  "interval":10 //间隔时间，分钟为单位。运行时，软件判断最后一次导入时间与当前时间差值如果大于设定的间隔，系统会使用当前时间减去间隔时间做为查询时间
+}
+```
+
+* 日志
+
+　如果软件有任何问题，请查询error.log,这里放置错误日志
+ 
+ * 最后的导入时间
+　
+   文件running.json，放置最后的导入时间，无需手工修改，系统自动维护。
+　
+
+ 
+ 
+ ### ubuntu docker 版本安装
 * 安装ubuntu server 16.4 lts
 
    https://www.ubuntu.com/download/server
@@ -55,11 +110,6 @@ http://www.oracle.com/technetwork/database/database-technologies/instant-client/
 * 安装docker 
 
 
-
-
-
-
-
 ### oracle vm 安装
 
 * 在运行机安装 oracle vm virtualbox
@@ -80,46 +130,6 @@ http://www.oracle.com/technetwork/database/database-technologies/instant-client/
 
 　　运行时修改到当前时间减去9小时。以后程序会自动更新
 
-
-### 维护
-
-* 数据库和ftp参数设置
-
-　路径c:/mk/metar/app.json
-
-
-```
-{
-  "db": {
-    "user"          : "mhapp",//数据库用户名
-    "password"      : "mhapp",//数据库密码
-    "connectString" : "192.6.203.102/ZYLDWDB"//数据库地址和服务名
-  },
-  "query": "SELECT RPTCONTENT FROM rpt01_cac WHERE tt = 'SA' and INSERTTIME >to_date(:now,'yyyy-MM-dd  HH24:mi:ss')",//查询报文语句，一般不需更改
-  "maxDate":"SELECT max(INSERTTIME) FROM rpt01_cac WHERE tt = 'SA'",//查询最后报文日期语句，一般不需更改
-  "ftp":{
-    "host":"172.20.102.5",//ftp地址
-    "port":21,//端口
-    "user":"telexftp",//用户名
-    "password":"telex"//密码
-  },
-  "date":"2017-03-29 03:00:00"
-}
-```
-
-* 日志
-
-　如果软件有任何问题，请查询c:/mk/metar/error.log,这里放置错误日志
-
-* 备份
-
-　
-　如果核对对机场的报文，可以查询c:/mk/metar/upload/中的xml文件
-
 ### 注意事项
 
-* 软件停止运行后，再次启动。
-
-　　修改　c:/mk/metar/running.json文件中的时间，参考安装。
-
-　　如果不修改，软件会取从上次停止时间后的所有报文数据，可能十分缓慢
+　* beta 版本增加了对导入时间的处理，不需再手工修改上次运行时间
