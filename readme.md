@@ -98,17 +98,15 @@
    
 ### 系统监控
 
-　　系统监控用http访问
+　系统监控用http访问
   
-  　* 报文解析监控路径
-  　
-   　http://localhost:8888/sources/1/dashboards/1
-    
-    
-    * 报文服务器负载监控地址
-    
-    
-    http://localhost:8888/sources/1/hosts/WIN-1EUIN6T3EEV
+  * 报文解析监控路径   
+   
+   http://localhost:8888/sources/1/dashboards/1
+   
+  * 报文主机负载监控
+     
+   http://localhost:8888/sources/1/hosts/WIN-1EUIN6T3EEV
   
    
 ### 核对软件是否正常工作步骤
