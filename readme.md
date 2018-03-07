@@ -56,17 +56,17 @@
 ```
 {
   "db": {
-    "user"          : "mhapp",//数据库用户名
-    "password"      : "mhapp",//数据库密码
-    "connectString" : "192.6.203.102/ZYLDWDB"//数据库地址和服务名
+    "user"          : "metar",//数据库用户名
+    "password"      : "metar",//数据库密码
+    "connectString" : "10.0.1.2/metar"//数据库地址和服务名
   },
   "query": "SELECT RPTCONTENT FROM rpt01_cac WHERE tt = 'SA' and INSERTTIME >to_date(:now,'yyyy-MM-dd  HH24:mi:ss')",//查询报文语句，一般不需更改
   "maxDate":"SELECT max(INSERTTIME) FROM rpt01_cac WHERE tt = 'SA'",//查询最后报文日期语句，一般不需更改
   "ftp":{
-    "host":"172.20.102.5",//ftp地址
+    "host":"10.0.1.1",//ftp地址
     "port":21,//端口
-    "user":"telexftp",//用户名
-    "password":"telex"//密码
+    "user":"mocoolka",//用户名
+    "password":"mocoolka"//密码
   },
   "interval":10 //间隔时间，分钟为单位。运行时，软件判断最后一次导入时间与当前时间差值如果大于设定的间隔，系统会使用当前时间减去间隔时间做为查询时间
 }
@@ -80,7 +80,9 @@
 　
    文件running.json，放置最后的导入时间，无需手工修改，系统自动维护。
 　
+### 注意事项
 
+　* beta 版本增加了对导入时间的处理，不需再手工修改上次运行时间
  
  
  ### ubuntu docker 版本安装
@@ -130,6 +132,4 @@
 
 　　运行时修改到当前时间减去9小时。以后程序会自动更新
 
-### 注意事项
 
-　* beta 版本增加了对导入时间的处理，不需再手工修改上次运行时间
