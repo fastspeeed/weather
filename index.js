@@ -12,6 +12,7 @@ const Client = require('ftp');
 const { combine, timestamp,  prettyPrint } = format;
 const uuidv4 = require('uuid/v4');
 
+
 const logger = createLogger({
     level: 'info',
     format: combine(

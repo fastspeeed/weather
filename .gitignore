@@ -32,6 +32,10 @@ node_modules
 .DS_Store
 .env
 *.pyc
+app.json
+package-lock.json
+yarn-error.log
+yarn.lock
 
 # Build
 
