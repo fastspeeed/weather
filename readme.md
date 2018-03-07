@@ -29,7 +29,7 @@
     如果是windows系统，加解压缩路径到windows环境变量path中
     
 
-*　安装　metar 
+* 　安装　metar 
 
    ```
    git clone https://github.com/fastspeeed/weather/
@@ -38,7 +38,7 @@
    ```
    
 
-*　单独运行 metar
+* 　单独运行 metar
 
    运行一次可以转换当前时间点以前的数据
    ```
@@ -47,7 +47,7 @@
    ```
    
    
-*　持续运行metar
+* 持续运行metar
 
    在windows系统中配置任务管理　
 
@@ -84,7 +84,7 @@
 ```
 
 
-* 日志
+*  日志
 
 　如果软件有任何问题，请查询error.log,这里放置错误日志
  
