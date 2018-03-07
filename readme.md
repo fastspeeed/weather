@@ -1,26 +1,33 @@
 # 航空气象报文解析
 
+
   从报文数据中取到原始数据，解析为json格式数据，转换到xml,上传xml到ftp
+  
 
 ### 安装
 
 * 安装 node js
 
   下载地址　https://nodejs.org/en/
+  
 
 * 安装 node-oracledb 的依赖库
 
     参考手册　https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
+    
 
   安装　oracle instant-client
 
     下载地址　http://www.oracle.com/technetwork/database/database-technologies/instant-client/overview/index.html
+    
   
   解压缩到任意路径
+  
 
   增加环境变量
     
     如果是windows系统，加解压缩路径到windows环境变量path中
+    
 
 *　安装　metar 
 
@@ -29,6 +36,7 @@
    cd weather
    npm install
    ```
+   
 
 *　单独运行 metar
 
@@ -38,6 +46,7 @@
    npm start
    ```
    
+   
 *　持续运行metar
 
    在windows系统中配置任务管理　
@@ -45,6 +54,7 @@
    执行命令为npm start
 
    执行目录为 xxx:/weather
+   
 
 
 ### 配置文件
@@ -52,6 +62,7 @@
 * 数据库和ftp参数设置
 
 　复制app.json.template 到app.json
+ 
 
 ```
 {
@@ -72,20 +83,53 @@
 }
 ```
 
+
 * 日志
 
 　如果软件有任何问题，请查询error.log,这里放置错误日志
  
- * 最后的导入时间
+ 
+ 
+* 最后的导入时间
 　
    文件running.json，放置最后的导入时间，无需手工修改，系统自动维护。
+   
+   
+   
 　
 ### 注意事项
 
 　* beta 版本增加了对导入时间的处理，不需再手工修改上次运行时间
  
  
- ### ubuntu docker 版本安装
+ 
+### 开发用到命令
+
+```
+git config --global http.proxy http://192.6.204.7:808
+git add .
+git commit -m "comment"
+git push
+
+npm config set proxy http://192.6.204.7:808
+npm config set https-proxy http://192.6.204.7:808
+npm config set registry https://registry.npm.taobao.org
+```
+
+
+### windows 2008 端口映射命令
+
+增加
+```
+netsh interface portproxy add v4tov4 listenport=21 listenaddress=192.6.204.11 connectport=21 connectaddress=172.20.102.5
+```
+查看
+```
+netsh interface portproxy  show all
+``` 
+ 
+ 
+ ### ubuntu docker 版本安装（未完成）
 * 安装ubuntu server 16.4 lts
 
    https://www.ubuntu.com/download/server
@@ -112,7 +156,7 @@
 * 安装docker 
 
 
-### oracle vm 安装
+### oracle vm 安装（已放弃）
 
 * 在运行机安装 oracle vm virtualbox
 
