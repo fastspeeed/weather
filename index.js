@@ -1,5 +1,7 @@
 const oracledb = require('oracledb');
 const fs = require('fs');
+const {influxParse} =require('./lib/tick');
+const Stopwatch = require("node-stopwatch").Stopwatch;
 const moment = require('moment');
 let config=require('./app.json');
 let running=require('./running.json');
@@ -16,7 +18,8 @@ const convertStandToBeijing=(str)=>	moment(str,"YYYY-MM-DD HH:mm:ss").utcOffset(
 const momentToString=(d)=>d.format("YYYY-MM-DD HH:mm:ss");
 const stringToMoment=(str)=>moment(str,"YYYY-MM-DD HH:mm:ss");
 const getBeginDate=(interval=config.interval*60*1000)=>(logDate,nowDate)=>nowDate-logDate>interval|nowDate<=logDate?nowDate.subtract(interval/1000,'seconds'):logDate;
-
+const stopwatch = Stopwatch.create();
+//stopwatch.start();
 
 //const beginTimer = getBeginDate()(logDate,moment()).format("YYYY-MM-DD HH:mm:ss")
 const logger = createLogger({
@@ -30,7 +33,7 @@ const logger = createLogger({
         // new transports.File({ filename: 'combined.log' })
     ]
 });
-
+const tickWrite=influxParse(config.influxDB,config.nodeName,logger);
 const Client = require('ftp');
 
 const ftpReady=()=>{
@@ -43,7 +46,9 @@ const ftpReady=()=>{
         });*/
     });
     ftp.on('error',function (err) {
-        logger.error({config:config.ftp,error:err});
+		tickWrite({error:'ftp',duration:stopwatch.elapsedMilliseconds})
+        logger.error({config:config.ftp,error:err,});
+		//stopwatch.stop();
     })
     ftp.connect(config.ftp);
 }
@@ -54,6 +59,7 @@ const dbReady=(ftp)=>{
         function(err, connection)
         {
             if (err) {
+				tickWrite({error:'database',duration:stopwatch.elapsedMilliseconds})
                 logger.error({config:config.db,error:err.message});
                 ftp.end();
                 return;
@@ -63,11 +69,18 @@ const dbReady=(ftp)=>{
             const beginTimerStand = momentToString(convertBeijinUtcToStand(beginTimer));
             connection.execute(config.query,[beginTimerStand],
                 function(err, result) {
-                    if (err) { logger.error({query:config.query,error:err.message}); doRelease(connection,ftp); return; }
+                    if (err) { 
+						tickWrite({error:'database',duration:stopwatch.elapsedMilliseconds})
+						logger.error({query:config.query,error:err.message});
+						doRelease(connection,ftp); 
+						return; 
+					}
                     logger.info(`record count=${result.rows.length}`);
+					let errors=0;
 					if (result.rows.length !== 0){
-                       createJson(result.rows,ftp)
+                      errors= createJson(result.rows,ftp)
                     }
+					tickWrite({error:'none',fails:errors,totals:result.rows.length,duration:stopwatch.elapsedMilliseconds})
                     console.log('over')
 					getMaxDate(connection,ftp)
                    
@@ -96,6 +109,7 @@ const getMaxDate=(connection,ftp)=>{
 
 const createJson=(rows,ftp)=>{
    // for(let i=0;i<1;i++) {
+	   let errors=0;
    for(let i=0;i<rows.length;i++) {
        let clob = rows[i][0];
        try {
@@ -118,9 +132,11 @@ const createJson=(rows,ftp)=>{
        }
        catch(err){
            logger.debug({src:clob,err})
+		   errors++;
        }
 
    }
+   return errors;
 }
 
 
