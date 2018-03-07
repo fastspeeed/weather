@@ -96,6 +96,21 @@
 　
    文件running.json，放置最后的导出时间，无需手工修改，系统自动维护。
    
+### 系统监控
+
+　　系统监控用http访问
+  
+  　* 报文解析监控路径
+  　
+   　http://localhost:8888/sources/1/dashboards/1
+    
+    
+    * 报文服务器负载监控地址
+    
+    
+    http://localhost:8888/sources/1/hosts/WIN-1EUIN6T3EEV
+  
+   
 ### 核对软件是否正常工作步骤
 
  *  查看ftp最后上传时间
@@ -130,6 +145,9 @@ npm config set https-proxy http://192.6.204.7:808
 npm config set registry https://registry.npm.taobao.org
 ```
 
+### influx 命令
+
+http://localhost:8086/query?q=show+databases
 
 ### windows 2008 端口映射命令
 
