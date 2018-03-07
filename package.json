@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "fastspeeed@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "ftp": "^0.3.10",
     "js2xmlparser": "^3.0.0",

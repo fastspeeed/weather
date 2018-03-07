@@ -60,17 +60,13 @@ const dbReady=(ftp)=>{
             }
             let logDate=stringToMoment(running.date);
 			let beginTimer=momentToString(getBeginDate()(logDate,moment()));
-			console.log(beginTimer);
             const beginTimerStand = momentToString(convertBeijinUtcToStand(beginTimer));
-			console.log(beginTimerStand);
             connection.execute(config.query,[beginTimerStand],
                 function(err, result) {
                     if (err) { logger.error({query:config.query,error:err.message}); doRelease(connection,ftp); return; }
-                    if (result.rows.length === 0)
-                        logger.info("No results");
-                    else {
-                        logger.info(`record count=${result.rows.length}`);
-                        createJson(result.rows,ftp)
+                    logger.info(`record count=${result.rows.length}`);
+					if (result.rows.length !== 0){
+                       createJson(result.rows,ftp)
                     }
                     console.log('over')
 					getMaxDate(connection,ftp)
