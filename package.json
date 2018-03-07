@@ -4,15 +4,12 @@
   "main": "index.js",
   "author": "fastspeeed@gmail.com",
   "license": "MIT",
-  "bin": {
-    "yuCsvToDB": "./lib/cli.js"
-  },
   "dependencies": {
     "ftp": "^0.3.10",
     "js2xmlparser": "^3.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.0",
-    "node-schedule": "^1.3.0",
+    "oracledb": "^2.0.15",
     "uuid": "^3.1.0",
     "winston": "^3.0.0-rc1"
   }
