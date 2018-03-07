@@ -2,6 +2,32 @@
 
 从报文数据中取到原始数据，解析为json格式数据，转换到xml,上传xml到ftp
 
+### windows 版本安装
+
+* 安装 node js
+ https://nodejs.org/en/
+
+* 安装 node-oracledb
+
+https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
+
+安装instant-client
+
+http://www.oracle.com/technetwork/database/database-technologies/instant-client/overview/index.html
+
+加解压缩路径到windows环境变量path中
+
+*　安装metar软件包
+
+复制目录到硬盘目录 
+安装依赖包　
+在msdos下进入meatr目录　输入npm install
+测试　npm start如果没有
+增加
+
+
+*
+
 ### ubuntu docker 版本安装
 * 安装ubuntu server 16.4 lts
 
