@@ -78,14 +78,11 @@
    
    
 * 持续运行metar
-
-   在windows系统中配置任务管理　
-
-   执行命令为npm start
-
-   执行目录为 xxx:/weather
-   
-
+  ```
+   cd weather
+   npm start
+  ```  
+  或者直接运行桌面快捷方式
 
 ### 配置文件
 
@@ -127,6 +124,16 @@
 ### 系统监控
 
 　系统监控用http访问
+ 
+  * 运行监控
+  
+    运行３个应用程序
+    ```
+    \influx\influxdb-1.5.0-1\influxd.exe
+    \influx\chronograf-1.4.2.1-1\chronograf.exe
+    \influx\telegraf\telegraf.exe
+    ```
+  
   
   * 报文解析监控路径   
    
@@ -135,6 +142,10 @@
   * 报文主机负载监控
      
    http://localhost:8888/sources/1/hosts/WIN-1EUIN6T3EEV
+   
+   * 配置文档
+   
+   https://docs.influxdata.com/influxdb/v1.5/
   
    
 ### 核对软件是否正常工作步骤
