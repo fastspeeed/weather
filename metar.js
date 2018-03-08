@@ -1,6 +1,9 @@
 const {ftpReady} =require('./index');
-const interval=2*60*1000;
+let config=require('./app.json');
+let running=require('./running.json');
+const interval=config.nextInterval*60*1000;
+ftpReady();
 function  myfunc(){
-    ftpReady();
+    ftpReady(config,running);
 }
 setInterval(myfunc,interval);

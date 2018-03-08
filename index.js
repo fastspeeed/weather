@@ -26,10 +26,11 @@ const logger = createLogger({
     level: 'info',
     format: combine(
         timestamp(),
+		prettyPrint(),
     ),
     transports: [
-        new transports.File({ filename: 'error.log', level: 'info' }),
-        // new transports.File({ filename: 'combined.log' })
+        new transports.File({ filename: 'error.log', level: 'error' }),
+        new transports.File({ filename: 'info.log', level: 'info' })
     ]
 });
 const tickWrite=influxParse(config.influxDB,config.nodeName,logger);

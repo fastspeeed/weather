@@ -1,11 +1,11 @@
 {
   "name": "mocoolka-metar",
-  "version": "0.5.0",
+  "version": "0.9.0",
   "main": "index.js",
   "author": "fastspeeed@gmail.com",
   "license": "MIT",
   "scripts": {
-    "start": "node metar.js"
+    "start": "title 报文采集  && node metar.js"
   },
   "dependencies": {
     "ftp": "^0.3.10",
