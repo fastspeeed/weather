@@ -5,7 +5,7 @@
   "author": "fastspeeed@gmail.com",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node metar.js"
   },
   "dependencies": {
     "ftp": "^0.3.10",

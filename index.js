@@ -26,7 +26,6 @@ const logger = createLogger({
     level: 'info',
     format: combine(
         timestamp(),
-        prettyPrint()
     ),
     transports: [
         new transports.File({ filename: 'error.log', level: 'info' }),
@@ -81,7 +80,7 @@ const dbReady=(ftp)=>{
                       errors= createJson(result.rows,ftp)
                     }
 					tickWrite({error:'none',fails:errors,totals:result.rows.length,duration:stopwatch.elapsedMilliseconds})
-                    console.log('over')
+                    console.log({error:'none',fails:errors,totals:result.rows.length,duration:stopwatch.elapsedMilliseconds,timestamp:momentToString(moment())})
 					getMaxDate(connection,ftp)
                    
                     
@@ -150,5 +149,8 @@ function doRelease(connection,ftp)
     ftp.end();
 	// logger.info(moment().format("YYYY-MM-DD  HH:mm:ss")+' over')
 }
-ftpReady();
+module.exports={
+  ftpReady,
+ 
+}
 //console.log(moment().format("YYYY-MM-DD  HH:mm:ss"));

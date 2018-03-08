@@ -1,6 +1,6 @@
-const run =require('./index');
+const {ftpReady} =require('./index');
 const interval=2*60*1000;
 function  myfunc(){
-    run();
+    ftpReady();
 }
 setInterval(myfunc,interval);
